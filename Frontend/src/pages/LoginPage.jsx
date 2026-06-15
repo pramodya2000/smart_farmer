@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { FaUser, FaLock } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { FaEnvelope, FaLock } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 import './LoginPage.css';
 import farmBg from '../assets/farm-bg.png';
 
@@ -8,10 +10,34 @@ const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic
-    console.log('Login attempt:', { username, password });
+    setLoading(true);
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/auth/login', {
+        username,
+        password
+      });
+      
+      toast.success(response.data.message || 'Logged in successfully!');
+      
+      // Save token (usually in localStorage or context)
+      localStorage.setItem('token', response.data.token);
+      
+      // Redirect to home/dashboard
+      setTimeout(() => navigate('/home'), 1000);
+
+    } catch (error) {
+      console.error('Login error:', error);
+      const errorMsg = error.response?.data?.message || 'Invalid credentials';
+      toast.error(errorMsg);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -27,11 +53,11 @@ const LoginPage = () => {
         <form onSubmit={handleSubmit} className="login-form">
           <div className="input-group">
             <div className="input-icon">
-              <FaUser />
+              <FaEnvelope />
             </div>
             <input 
-              type="text" 
-              placeholder="Username" 
+              type="email" 
+              placeholder="Email Address" 
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required 
@@ -55,7 +81,9 @@ const LoginPage = () => {
             <a href="#forgot">Forgot Password?</a>
           </div>
 
-          <button type="submit" className="login-btn">Login</button>
+          <button type="submit" className="login-btn" disabled={loading}>
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
         </form>
 
         <div className="signup-link">
