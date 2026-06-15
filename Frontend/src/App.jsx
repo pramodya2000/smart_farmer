@@ -1,17 +1,21 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
 import './App.css';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/login" element={<LoginPage />} />
-        {/* Placeholder for Signup */}
-        <Route path="/signup" element={<div style={{textAlign: 'center', marginTop: '50px'}}><h2>Sign Up Page Coming Soon</h2><a href="/login">Back to Login</a></div>} />
-      </Routes>
-    </Router>
+    <>
+      <Toaster position="top-center" />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 
