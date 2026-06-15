@@ -1,0 +1,5 @@
+mongodb
+
+user name=pramodyadilhara_db_user
+pw=FjBXnwiaij3R6dUe
+Your current IP address (175.157.40.60) 
