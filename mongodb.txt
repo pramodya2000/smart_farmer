@@ -3,3 +3,50 @@ mongodb
 user name=pramodyadilhara_db_user
 pw=FjBXnwiaij3R6dUe
 Your current IP address (175.157.40.60) 
+
+PUSH NEW CHANGERS
+
+git add .
+git commit -m "new home update"
+git checkout develop
+git pull
+git checkout feat/home
+git rebase develop
+git push -u origin feat/home
+git checkout develop
+git pull
+git checkout feat/home 
+git rebase develop
+
+
+dev to main 
+
+git checkout develop
+git pull origin develop
+git merge feat/home
+git push origin develop
+
+
+git checkout main
+git pull origin main
+git merge develop
+git push origin main
+
+
+
+full flow
+
+git checkout feat/new-feature
+git rebase main
+
+develop after
+
+git checkout develop
+git pull origin develop
+git merge feat/your-branch-name
+git push origin develop
+
+git checkout main
+git pull origin main
+git merge develop
+git push origin main
